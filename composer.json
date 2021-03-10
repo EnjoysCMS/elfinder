@@ -1,0 +1,15 @@
+{
+    "name": "enjoyscms/elfinder",
+    "description": "Module ElFinder for EnjoysCMS",
+    "type": "enjoyscms-module",
+    "require": {
+        "studio-42/elfinder": "^2.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "enjoys",
+            "email": "deadly.info@gmail.com"
+        }
+    ]
+}
