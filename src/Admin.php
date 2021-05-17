@@ -40,13 +40,6 @@ final class Admin implements ModelInterface
         $this->checkScripts();
         $this->makeSymlink();
 
-        Assets::js(
-            [
-                'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js',
-                $_ENV['PUBLIC_DIR'] . '/elfinder/main.js'
-            ]
-        );
-
         return [];
     }
 }
