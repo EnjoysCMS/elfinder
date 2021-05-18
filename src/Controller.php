@@ -24,6 +24,7 @@ final class Controller extends BaseController
     public function __construct(ContainerInterface $container)
     {
         new Load($container);
+
         parent::__construct(
             $container->get(Environment::class),
             $container->get(ServerRequestInterface::class),
@@ -32,6 +33,13 @@ final class Controller extends BaseController
             $container->get(RendererInterface::class)
         );
     }
+
+    private function getVersion()
+    {
+        $info = json_decode(file_get_contents($_ENV['ELFINDER_VENDOR_DIR'] . '/package.json'));
+        return $info->version;
+    }
+
 
 //    /**
 //     * @Route(
@@ -44,13 +52,35 @@ final class Controller extends BaseController
 //     */
     #[Route(
         path: 'elfinder/elfinder.html',
-        name: "admin/elfinder",
+        name: "elfinder",
         options: [
             "aclComment" => "[admin] elFinder"
         ]
     )]
     public function elFinder(): string
     {
-        return $this->view(__DIR__ . '/elfinder.twig', []);
+        return $this->view(
+            __DIR__ . '/template/elfinder.twig',
+            [
+                'version' => $this->getVersion()
+            ]
+        );
+    }
+
+    #[Route(
+        path: 'elfinder/popup.html',
+        name: "elfinder/popup",
+        options: [
+            "aclComment" => "[admin] elFinder Popup"
+        ]
+    )]
+    public function elFinderInputText(): string
+    {
+        return $this->view(
+            __DIR__ . '/template/popup.twig',
+            [
+                'version' => $this->getVersion()
+            ]
+        );
     }
 }

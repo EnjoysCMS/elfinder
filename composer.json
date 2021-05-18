@@ -20,10 +20,10 @@
         }
     },
     "extra": {
-        "module-name": "ElFinder",
+        "module-name": "elFinder",
         "use-migrations": false,
         "admin-links": {
-            "admin/elfinder": "elFinder"
+            "elfinder": "elFinder"
         }
     }
 }
