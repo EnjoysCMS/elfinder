@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class Controller extends BaseController
 {
+
     private string $templatePath = __DIR__;
 
     /**
@@ -22,16 +23,24 @@ final class Controller extends BaseController
         return realpath($this->templatePath);
     }
 
-    /**
-     * @Route(
-     *     name="admin/elfinder",
-     *     path="admin/elfinder",
-     *     options={
-     *          "aclComment": "[admin] elFinder"
-     *     }
-     * )
-     */
-    public function elFinder(ContainerInterface $container)
+//    /**
+//     * @Route(
+//     *     name="admin/elfinder",
+//     *     path="elfinder/elfinder.html",
+//     *     options={
+//     *          "aclComment": "[admin] elFinder"
+//     *     }
+//     * )
+//     */
+    #[Route(
+        path: 'elfinder/elfinder.html',
+        name: "admin/elfinder",
+        options: [
+            "aclComment" => "[admin] elFinder"
+        ]
+
+    )]
+    public function elFinder(ContainerInterface $container): string
     {
         return $this->view(
             $this->getTemplatePath() . '/elfinder.twig',
