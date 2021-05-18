@@ -6,18 +6,22 @@ declare(strict_types=1);
 namespace EnjoysCMS\Module\ElFinder;
 
 
-use App\Module\Admin\Core\ModelInterface;
 use Enjoys\AssetsCollector\Helpers;
 use EnjoysCMS\Core\Components\Helpers\Assets;
 use Psr\Container\ContainerInterface;
 
-final class Admin implements ModelInterface
+final class Load
 {
 
     private string $app_path;
 
+    /**
+     * @throws \Exception
+     */
     public function __construct(ContainerInterface $container)
     {
+        $this->checkEnvironment();
+
         $this->app_path = $_ENV['PUBLIC_DIR'] . pathinfo(
                 (string)$container->get('Router')?->getRouteCollection()?->get('admin/elfinder')?->getPath(),
                 PATHINFO_DIRNAME
@@ -28,6 +32,13 @@ final class Admin implements ModelInterface
                 sprintf('$app_path must be string %s given', get_debug_type($this->app_path))
             );
         }
+
+        Helpers::createDirectory($this->app_path);
+        Helpers::createDirectory($_ENV['ELFINDER_FILES_DIR']);
+        Helpers::createDirectory($_ENV['ELFINDER_TRASH_DIR']);
+
+        $this->checkScripts();
+        $this->makeSymlink();
     }
 
     private function checkScripts()
@@ -50,19 +61,26 @@ final class Admin implements ModelInterface
         Assets::createSymlink($this->app_path . '/img', $_ENV['ELFINDER_VENDOR_DIR'] . '/img');
     }
 
+
     /**
      * @throws \Exception
      */
-    public function getContext(): array
+    private function checkEnvironment(): void
     {
-        Helpers::createDirectory($this->app_path);
-        Helpers::createDirectory($_ENV['ELFINDER_FILES_DIR']);
-        Helpers::createDirectory($_ENV['ELFINDER_TRASH_DIR']);
-
-        $this->checkScripts();
-        $this->makeSymlink();
-
-
-        return [];
+        if (!isset($_ENV['ELFINDER_VENDOR_DIR'])) {
+            throw new \Exception('Please set to .env ELFINDER_VENDOR_DIR');
+        }
+        if (!isset($_ENV['ELFINDER_FILES_DIR'])) {
+            throw new \Exception('Please set to .env ELFINDER_FILES_DIR');
+        }
+        if (!isset($_ENV['ELFINDER_FILES_URL'])) {
+            throw new \Exception('Please set to .env ELFINDER_FILES_URL');
+        }
+        if (!isset($_ENV['ELFINDER_TRASH_DIR'])) {
+            throw new \Exception('Please set to .env ELFINDER_TRASH_DIR');
+        }
+        if (!isset($_ENV['ELFINDER_TRASH_URL'])) {
+            throw new \Exception('Please set to .env ELFINDER_TRASH_URL');
+        }
     }
 }

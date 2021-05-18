@@ -18,36 +18,19 @@ use Twig\Environment;
 final class Controller extends BaseController
 {
 
-    private string $templatePath = __DIR__;
-
     /**
      * @throws \Exception
      */
-    public function __construct(
-        Environment $twig,
-        ServerRequestInterface $serverRequest,
-        EntityManager $entityManager,
-        UrlGeneratorInterface $urlGenerator,
-        RendererInterface $renderer
-    ) {
-        if (!isset($_ENV['ELFINDER_VENDOR_DIR'])
-            || !isset($_ENV['ELFINDER_FILES_DIR'])
-            || !isset($_ENV['ELFINDER_FILES_URL'])
-            || !isset($_ENV['ELFINDER_TRASH_DIR'])
-            || !isset($_ENV['ELFINDER_TRASH_URL'])
-        ) {
-            throw new \Exception('Please read README.md and set Environment variables');
-        }
-
-        parent::__construct($twig, $serverRequest, $entityManager, $urlGenerator, $renderer);
-    }
-
-    /**
-     * @return string
-     */
-    public function getTemplatePath(): string
+    public function __construct(ContainerInterface $container)
     {
-        return realpath($this->templatePath);
+        new Load($container);
+        parent::__construct(
+            $container->get(Environment::class),
+            $container->get(ServerRequestInterface::class),
+            $container->get(EntityManager::class),
+            $container->get(UrlGeneratorInterface::class),
+            $container->get(RendererInterface::class)
+        );
     }
 
 //    /**
@@ -65,14 +48,9 @@ final class Controller extends BaseController
         options: [
             "aclComment" => "[admin] elFinder"
         ]
-
     )]
-    public function elFinder(
-        ContainerInterface $container
-    ): string {
-        return $this->view(
-            $this->getTemplatePath() . '/elfinder.twig',
-            $this->getContext($container->get(Admin::class))
-        );
+    public function elFinder(): string
+    {
+        return $this->view(__DIR__ . '/elfinder.twig', []);
     }
 }
