@@ -36,7 +36,7 @@ final class Load
     private function copyDistFiles()
     {
         foreach (self::DIST_FILES as $file => $distFile) {
-              if (!file_exists($this->app_path . $file)) {
+            if (!file_exists($this->app_path . '/' . $file)) {
                 copy(__DIR__ . '/../dist/' . $distFile, $this->app_path . '/' . $file);
             }
         }

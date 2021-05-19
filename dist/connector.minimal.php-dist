@@ -8,9 +8,16 @@ include $_SERVER['DOCUMENT_ROOT'] . '/../bootstrap.php';
 
 /** @var ContainerInterface $container */
 $aclConfig = $container->get('Config')->getConfig('acl');
-if (!ACL::access('\EnjoysCMS\Module\ElFinder\Controller::elFinder', '[admin] elFinder')
-    && !$aclConfig['disableChecking']
-) {
+
+$route = $container->get('Router')?->getRouteCollection()?->get('elfinder/connector');
+
+if ($route === null) {
+    \EnjoysCMS\Core\Components\Helpers\Error::code(500, 'Route `elfinder/connector` no found');
+}
+
+$controller = implode('::', $route->getDefault('_controller'));
+
+if (!ACL::access($controller, $route->getOption('aclComment') ?? $controller) && !$aclConfig['disableChecking']) {
     \EnjoysCMS\Core\Components\Helpers\Error::code(403);
 }
 

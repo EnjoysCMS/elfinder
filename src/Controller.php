@@ -18,6 +18,8 @@ use Twig\Environment;
 final class Controller extends BaseController
 {
 
+    const ELFINDER_PUBLIC_DIR = 'elfinder';
+
     /**
      * @throws \Exception
      */
@@ -51,7 +53,7 @@ final class Controller extends BaseController
 //     * )
 //     */
     #[Route(
-        path: 'elfinder/elfinder.html',
+        path: self::ELFINDER_PUBLIC_DIR . '/elfinder.html',
         name: "elfinder",
         options: [
             "aclComment" => "[admin] elFinder"
@@ -68,7 +70,7 @@ final class Controller extends BaseController
     }
 
     #[Route(
-        path: 'elfinder/popup.html',
+        path: self::ELFINDER_PUBLIC_DIR . '/popup.html',
         name: "elfinder/popup",
         options: [
             "aclComment" => "[admin] elFinder Popup"
@@ -82,5 +84,17 @@ final class Controller extends BaseController
                 'version' => $this->getVersion()
             ]
         );
+    }
+
+    #[Route(
+        path: self::ELFINDER_PUBLIC_DIR . '/connector.minimal.php',
+        name: "elfinder/connector",
+        options: [
+            "aclComment" => "[connector file] elFinder"
+        ]
+    )]
+    public function connector(): string
+    {
+        return '';
     }
 }
