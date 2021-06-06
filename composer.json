@@ -21,7 +21,6 @@
     },
     "extra": {
         "module-name": "elFinder",
-        "use-migrations": false,
         "admin-links": {
             "elfinder": "elFinder"
         }
