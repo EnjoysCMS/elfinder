@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace EnjoysCMS\Module\ElFinder;
-
 
 use App\Module\Admin\BaseController;
 use Doctrine\ORM\EntityManager;
@@ -18,7 +16,7 @@ use Twig\Environment;
 final class Controller extends BaseController
 {
 
-    const ELFINDER_PUBLIC_DIR = 'elfinder';
+    public const ELFINDER_PUBLIC_DIR = 'elfinder';
 
     /**
      * @throws \Exception
@@ -42,16 +40,6 @@ final class Controller extends BaseController
         return $info->version;
     }
 
-
-//    /**
-//     * @Route(
-//     *     name="admin/elfinder",
-//     *     path="elfinder/elfinder.html",
-//     *     options={
-//     *          "aclComment": "[admin] elFinder"
-//     *     }
-//     * )
-//     */
     #[Route(
         path: self::ELFINDER_PUBLIC_DIR . '/elfinder.html',
         name: "elfinder",

@@ -1,28 +1,28 @@
 {
-    "name": "enjoyscms/elfinder",
-    "description": "Module ElFinder for EnjoysCMS",
-    "type": "enjoyscms-module",
-    "require": {
-        "php": "^8.0",
-        "oomphinc/composer-installers-extender": "^2.0",
-        "studio-42/elfinder": "^2.1"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "enjoys",
-            "email": "deadly.info@gmail.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "EnjoysCMS\\Module\\ElFinder\\": "src/"
-        }
-    },
-    "extra": {
-        "module-name": "elFinder",
-        "admin-links": {
-            "elfinder": "elFinder"
-        }
+  "name": "enjoyscms/elfinder",
+  "description": "Module ElFinder for EnjoysCMS",
+  "license": "MIT",
+  "type": "enjoyscms-module",
+  "require": {
+    "php": "^8.0",
+    "oomphinc/composer-installers-extender": "^2.0",
+    "studio-42/elfinder": "^2.1"
+  },
+  "authors": [
+    {
+      "name": "enjoys",
+      "email": "deadly.info@gmail.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "EnjoysCMS\\Module\\ElFinder\\": "src/"
+    }
+  },
+  "extra": {
+    "module-name": "elFinder",
+    "admin-links": {
+      "elfinder": "elFinder"
+    }
+  }
 }

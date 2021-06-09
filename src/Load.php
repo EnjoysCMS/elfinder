@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace EnjoysCMS\Module\ElFinder;
-
 
 use Enjoys\AssetsCollector\Helpers;
 use EnjoysCMS\Core\Components\Helpers\Assets;
@@ -15,7 +13,7 @@ final class Load
 
     private string $app_path;
 
-    const DIST_FILES = [
+    private const DIST_FILES = [
         'main.js' => 'main.default.js',
         'connector.minimal.php' => 'connector.minimal.php-dist',
         'main.popup.js' => 'main.popup.default.js',
@@ -72,7 +70,7 @@ final class Load
         }
     }
 
-    private function fetchAppPath($container)
+    private function fetchAppPath(ContainerInterface $container)
     {
         $this->app_path = $_ENV['PUBLIC_DIR'] . pathinfo(
                 (string)$container->get('Router')?->getRouteCollection()?->get('elfinder')?->getPath(),

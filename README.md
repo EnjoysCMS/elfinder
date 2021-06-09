@@ -1,3 +1,5 @@
+**Supported only php 8.0 or higher**
+
 Add to .ENV
 ```
 ELFINDER_VENDOR_DIR=${PROJECT_DIR}/vendor/studio-42/elfinder
