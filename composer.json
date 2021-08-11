@@ -6,7 +6,8 @@
   "require": {
     "php": "^8.0",
     "oomphinc/composer-installers-extender": "^2.0",
-    "studio-42/elfinder": "^2.1"
+    "studio-42/elfinder": "^2.1",
+    "enjoyscms/admin": "^1.0"
   },
   "authors": [
     {
