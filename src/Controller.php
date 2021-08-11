@@ -24,14 +24,7 @@ final class Controller extends BaseController
     public function __construct(ContainerInterface $container)
     {
         new Load($container);
-
-        parent::__construct(
-            $container->get(Environment::class),
-            $container->get(ServerRequestInterface::class),
-            $container->get(EntityManager::class),
-            $container->get(UrlGeneratorInterface::class),
-            $container->get(RendererInterface::class)
-        );
+        parent::__construct($container);
     }
 
     private function getVersion()
