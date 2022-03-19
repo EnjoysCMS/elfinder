@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace EnjoysCMS\Module\ElFinder;
 
 use App\Module\Admin\BaseController;
-use Doctrine\ORM\EntityManager;
-use Enjoys\Forms\Renderer\RendererInterface;
-use Enjoys\Http\ServerRequestInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Twig\Environment;
 
 final class Controller extends BaseController
 {
@@ -40,14 +36,14 @@ final class Controller extends BaseController
             "aclComment" => "[admin] elFinder"
         ]
     )]
-    public function elFinder(): string
+    public function elFinder(): ResponseInterface
     {
-        return $this->view(
+        return $this->responseText($this->view(
             __DIR__ . '/template/elfinder.twig',
             [
                 'version' => $this->getVersion()
             ]
-        );
+        ));
     }
 
     #[Route(
@@ -57,14 +53,14 @@ final class Controller extends BaseController
             "aclComment" => "[admin] elFinder Popup"
         ]
     )]
-    public function elFinderInputText(): string
+    public function elFinderInputText(): ResponseInterface
     {
-        return $this->view(
+        return $this->responseText($this->view(
             __DIR__ . '/template/popup.twig',
             [
                 'version' => $this->getVersion()
             ]
-        );
+        ));
     }
 
     #[Route(
@@ -74,8 +70,8 @@ final class Controller extends BaseController
             "aclComment" => "[connector file] elFinder"
         ]
     )]
-    public function connector(): string
+    public function connector(): ResponseInterface
     {
-        return '';
+        return $this->responseText();
     }
 }
