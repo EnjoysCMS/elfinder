@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace EnjoysCMS\Module\ElFinder;
 
-use App\Module\Admin\BaseController;
+use EnjoysCMS\Module\Admin\AdminBaseController;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class Controller extends BaseController
+final class Controller extends AdminBaseController
 {
 
     public const ELFINDER_PUBLIC_DIR = 'elfinder';
