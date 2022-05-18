@@ -8,6 +8,7 @@ use EnjoysCMS\Module\Admin\AdminBaseController;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class Controller extends AdminBaseController
 {
@@ -36,12 +37,16 @@ final class Controller extends AdminBaseController
             "aclComment" => "[admin] elFinder"
         ]
     )]
-    public function elFinder(): ResponseInterface
+    public function elFinder(UrlGeneratorInterface $urlGenerator): ResponseInterface
     {
         return $this->responseText($this->view(
             __DIR__ . '/template/elfinder.twig',
             [
-                'version' => $this->getVersion()
+                'version' => $this->getVersion(),
+                'breadcrumbs' => [
+                    $urlGenerator->generate('admin/index') => 'Главная',
+                    sprintf('elFinder v%s', $this->getVersion())
+                ],
             ]
         ));
     }
