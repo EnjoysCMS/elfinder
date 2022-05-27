@@ -122,7 +122,7 @@
 
     // config of RequireJS (REQUIRED)
     require.config({
-        baseUrl: 'js',
+        baseUrl: '/elfinder/js',
         paths: {
             'jquery': '//cdnjs.cloudflare.com/ajax/libs/jquery/' + (old ? '1.12.4' : jqver) + '/jquery.min',
             'jquery-ui': '//cdnjs.cloudflare.com/ajax/libs/jqueryui/' + uiver + '/jquery-ui.min',
@@ -140,7 +140,7 @@
             // Documentation for client options:
             // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
             defaultOpts: {
-                url: 'php/connector.minimal.php' // connector URL (REQUIRED)
+                url: 'elfinder/connector.minimal.php' // connector URL (REQUIRED)
                 , commandsOptions: {
                     edit: {
                         extraOptions: {
