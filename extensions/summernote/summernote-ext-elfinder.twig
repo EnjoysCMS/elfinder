@@ -1,0 +1,28 @@
+{% do asset('js', [
+    'modules/elfinder/extensions/summernote/summernote-ext-elfinder.js',
+]) %}
+
+<script data-main="/elfinder/main.js" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+<script>
+    function elfinderDialog(context){
+        var fm = $('<div/>').dialogelfinder({
+            url : '{{ path('elfinder/connector') }}',
+            lang : 'ru',
+            width : 840,
+            height: 450,
+            destroyOnClose : true,
+            getFileCallback : function(file, fm) {
+                //console.log(file);
+                // $('.editor').summernote('editor.insertImage', fm.convAbsUrl(file.url)); ...before
+                context.invoke('editor.insertImage', fm.convAbsUrl(file.url));
+            },
+            commandsOptions : {
+                getfile : {
+                    oncomplete : 'close',
+                    folders : false
+                }
+            }
+        }).dialogelfinder('instance');
+    }
+</script>
