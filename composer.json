@@ -7,7 +7,8 @@
     "php": ">=8.0",
     "enjoyscms/core": "^4.0",
     "enjoyscms/admin": "^4.0",
-    "studio-42/elfinder": "^2.1"
+    "studio-42/elfinder": "^2.1",
+    "enjoys/assets-collector": "^2.1"
   },
   "authors": [
     {
