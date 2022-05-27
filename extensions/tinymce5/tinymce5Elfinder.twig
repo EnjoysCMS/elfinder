@@ -1,0 +1,18 @@
+{% do asset('js', [
+    'modules/elfinder/extensions/tinymce5/tinymce5ElfinderExt.js',
+]) %}
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="/elfinder/css/elfinder.min.css"/>
+<link rel="stylesheet" type="text/css" href="/elfinder/css/theme.css"/>
+<script type="text/javascript" src="/elfinder/js/elfinder.min.js" defer="defer"></script>
+
+<script>
+        const mceElf = new tinymceElfinder({
+            // connector URL (Use elFinder Demo site's connector for this demo)
+            url: '{{ path('elfinder/connector') }}',
+            // upload target folder hash for this tinyMCE
+            uploadTargetHash: 'l1_Lw',
+            // elFinder dialog node id
+            nodeId: 'elfinder'
+        });
+</script>
