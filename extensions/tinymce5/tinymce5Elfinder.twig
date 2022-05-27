@@ -1,10 +1,13 @@
 {% do asset('js', [
+    'local:/elfinder/js/elfinder.min.js',
     'modules/elfinder/extensions/tinymce5/tinymce5ElfinderExt.js',
 ]) %}
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"/>
-<link rel="stylesheet" type="text/css" href="/elfinder/css/elfinder.min.css"/>
-<link rel="stylesheet" type="text/css" href="/elfinder/css/theme.css"/>
-<script type="text/javascript" src="/elfinder/js/elfinder.min.js" defer="defer"></script>
+{% do asset('css', [
+    '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css',
+    'local:/elfinder/css/elfinder.min.css',
+    'local:/elfinder/css/theme.css',
+]) %}
+
 
 <script>
         const mceElf = new tinymceElfinder({
