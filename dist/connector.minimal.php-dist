@@ -1,6 +1,7 @@
 <?php
 
 use EnjoysCMS\Core\Components\Helpers\ACL;
+use EnjoysCMS\Core\Exception\ForbiddenException;
 
 // // load composer autoload before load elFinder autoload If you need composer
 // // You need to run the composer command in the php directory.
@@ -12,13 +13,13 @@ $aclConfig = $container->get('Config')->getConfig('acl');
 $route = $container->get('Router')?->getRouteCollection()?->get('elfinder/connector');
 
 if ($route === null) {
-    \EnjoysCMS\Core\Components\Helpers\Error::code(500, 'Route `elfinder/connector` no found');
+    throw new \RuntimeException('Route `elfinder/connector` no found');
 }
 
 $controller = implode('::', $route->getDefault('_controller'));
 
 if (!ACL::access($controller, $route->getOption('aclComment') ?? $controller) && !$aclConfig['disableChecking']) {
-    \EnjoysCMS\Core\Components\Helpers\Error::code(403);
+    throw new ForbiddenException();
 }
 
 // // Optional exec path settings (Default is called with command name only)
