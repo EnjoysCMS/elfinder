@@ -12,7 +12,7 @@
             // Documentation for client options:
             // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
             defaultOpts: {
-                url: '{{ path('elfinder/connector') }}', // or connector.maximal.php : connector URL (REQUIRED)
+                url: '{{ path('@elfinder_connector') }}', // or connector.maximal.php : connector URL (REQUIRED)
                 commandsOptions: {
                     edit: {
                         extraOptions: {

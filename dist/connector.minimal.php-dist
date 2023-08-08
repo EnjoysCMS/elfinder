@@ -1,24 +1,25 @@
 <?php
 
-use EnjoysCMS\Core\Components\Helpers\ACL;
+use DI\Container;
+use Enjoys\Config\Config;
+use EnjoysCMS\Core\AccessControl\AccessControl;
 use EnjoysCMS\Core\Exception\ForbiddenException;
+use Symfony\Component\Routing\RouteCollection;
 
 // // load composer autoload before load elFinder autoload If you need composer
 // // You need to run the composer command in the php directory.
 include $_SERVER['DOCUMENT_ROOT'] . '/../bootstrap.php';
 
-/** @var ContainerInterface $container */
-$aclConfig = $container->get('Config')->getConfig('acl');
-
-$route = $container->get('Router')?->getRouteCollection()?->get('elfinder/connector');
+/** @var Container $container */
+$config = $container->get(Config::class);
+$accessControl = $container->get(AccessControl::class);
+$route = $container->get(RouteCollection::class)->get('@elfinder_connector');
 
 if ($route === null) {
-    throw new \RuntimeException('Route `elfinder/connector` no found');
+    throw new RuntimeException('Route `@elfinder_connector` no found');
 }
 
-$controller = implode('::', $route->getDefault('_controller'));
-
-if (!ACL::access($controller, $route->getOption('aclComment') ?? $controller) && !$aclConfig['disableChecking']) {
+if (!$accessControl->isAccess('@elfinder_connector') && !$config->get('security->accessControl->disableChecking')) {
     throw new ForbiddenException();
 }
 

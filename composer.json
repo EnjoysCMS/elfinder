@@ -24,7 +24,7 @@
   "extra": {
     "module-name": "elFinder",
     "admin-links": {
-      "elfinder": "elFinder"
+      "@elfinder": "elFinder"
     }
   }
 }

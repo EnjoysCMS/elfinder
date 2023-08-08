@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace EnjoysCMS\Module\ElFinder;
 
 use Enjoys\AssetsCollector\Helpers;
-use EnjoysCMS\Core\Components\Helpers\Assets;
-use Psr\Container\ContainerInterface;
+use DI\Container;
+
+use Symfony\Component\Routing\RouteCollection;
+
+use function Enjoys\FileSystem\makeSymlink;
 
 final class Load
 {
@@ -22,7 +25,7 @@ final class Load
     /**
      * @throws \Exception
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->checkEnvironment();
         $this->fetchAppPath($container);
@@ -42,9 +45,9 @@ final class Load
 
     private function makeSymlink(): void
     {
-        Assets::createSymlink($this->app_path . '/js', $_ENV['ELFINDER_VENDOR_DIR'] . '/js');
-        Assets::createSymlink($this->app_path . '/css', $_ENV['ELFINDER_VENDOR_DIR'] . '/css');
-        Assets::createSymlink($this->app_path . '/img', $_ENV['ELFINDER_VENDOR_DIR'] . '/img');
+        makeSymlink($this->app_path . '/js', $_ENV['ELFINDER_VENDOR_DIR'] . '/js');
+        makeSymlink($this->app_path . '/css', $_ENV['ELFINDER_VENDOR_DIR'] . '/css');
+        makeSymlink($this->app_path . '/img', $_ENV['ELFINDER_VENDOR_DIR'] . '/img');
     }
 
 
@@ -70,10 +73,10 @@ final class Load
         }
     }
 
-    private function fetchAppPath(ContainerInterface $container)
+    private function fetchAppPath(Container $container)
     {
         $this->app_path = $_ENV['PUBLIC_DIR'] . pathinfo(
-                (string)$container->get('Router')?->getRouteCollection()?->get('elfinder')?->getPath(),
+                (string)$container->get(RouteCollection::class)->get('elfinder')?->getPath(),
                 PATHINFO_DIRNAME
             );
 
