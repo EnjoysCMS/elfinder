@@ -5,18 +5,22 @@ declare(strict_types=1);
 namespace EnjoysCMS\Module\ElFinder;
 
 use DI\Container;
+use EnjoysCMS\Core\Routing\Annotation\Route;
 use EnjoysCMS\Module\Admin\AdminBaseController;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
+#[Route(self::ELFINDER_PUBLIC_DIR, '@elfinder')]
 final class Controller extends AdminBaseController
 {
 
     public const ELFINDER_PUBLIC_DIR = 'elfinder';
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(Container $container)
     {
@@ -24,20 +28,23 @@ final class Controller extends AdminBaseController
         parent::__construct($container);
     }
 
-    private function getVersion()
+    private function getVersion(): string
     {
         $info = json_decode(file_get_contents($_ENV['ELFINDER_VENDOR_DIR'] . '/package.json'));
         return $info?->version ?? '-';
     }
 
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
     #[Route(
-        path: self::ELFINDER_PUBLIC_DIR . '/elfinder.html',
-        name: "@elfinder",
-        options: [
-            "aclComment" => "[admin] elFinder"
-        ]
+        path: '/elfinder.html',
+        name: '',
+        comment: '[admin] elFinder'
     )]
-    public function elFinder(UrlGeneratorInterface $urlGenerator): ResponseInterface
+    public function elFinder(): ResponseInterface
     {
         $this->breadcrumbs->setLastBreadcrumb(
             sprintf('elFinder v%s', $this->getVersion())
@@ -52,12 +59,15 @@ final class Controller extends AdminBaseController
         );
     }
 
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
     #[Route(
-        path: self::ELFINDER_PUBLIC_DIR . '/popup.html',
-        name: "@elfinder_popup",
-        options: [
-            "aclComment" => "[admin] elFinder Popup"
-        ]
+        path: '/popup.html',
+        name: '_popup',
+        comment: '[admin] elFinder Popup'
     )]
     public function elFinderInputText(): ResponseInterface
     {
@@ -72,14 +82,11 @@ final class Controller extends AdminBaseController
     }
 
     #[Route(
-        path: self::ELFINDER_PUBLIC_DIR . '/connector.minimal.php',
-        name: "@elfinder_connector",
-        options: [
-            "aclComment" => "[connector file] elFinder"
-        ]
+        path: '/connector.minimal.php',
+        name: '_connector',
+        comment: '[connector file] elFinder'
     )]
-    public function connector(): ResponseInterface
+    public function connector(): void
     {
-        return $this->response();
     }
 }
