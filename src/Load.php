@@ -7,10 +7,10 @@ namespace EnjoysCMS\Module\ElFinder;
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
-use Enjoys\AssetsCollector\Helpers;
 use Exception;
 use Symfony\Component\Routing\RouteCollection;
 
+use function Enjoys\FileSystem\createDirectory;
 use function Enjoys\FileSystem\makeSymlink;
 
 final class Load
@@ -95,8 +95,8 @@ final class Load
      */
     private function createDirectories(): void
     {
-        Helpers::createDirectory($this->app_path);
-        Helpers::createDirectory($_ENV['ELFINDER_FILES_DIR']);
-        Helpers::createDirectory($_ENV['ELFINDER_TRASH_DIR']);
+        createDirectory($this->app_path);
+        createDirectory($_ENV['ELFINDER_FILES_DIR']);
+        createDirectory($_ENV['ELFINDER_TRASH_DIR']);
     }
 }
