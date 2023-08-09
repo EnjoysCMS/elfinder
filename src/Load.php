@@ -85,7 +85,7 @@ final class Load
     private function fetchAppPath(Container $container): void
     {
         $this->app_path = $_ENV['PUBLIC_DIR'] . pathinfo(
-                (string)$container->get(RouteCollection::class)->get('elfinder')?->getPath(),
+                (string)($container->get(RouteCollection::class)->get('@elfinder')?->getPath() ?? '/elfinder/elfinder.html'),
                 PATHINFO_DIRNAME
             );
     }
