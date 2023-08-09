@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace EnjoysCMS\Module\ElFinder;
 
-use Enjoys\AssetsCollector\Helpers;
 use DI\Container;
-
+use DI\DependencyException;
+use DI\NotFoundException;
+use Enjoys\AssetsCollector\Helpers;
+use Exception;
 use Symfony\Component\Routing\RouteCollection;
 
 use function Enjoys\FileSystem\makeSymlink;
@@ -23,7 +25,7 @@ final class Load
     ];
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(Container $container)
     {
@@ -34,7 +36,7 @@ final class Load
         $this->makeSymlink();
     }
 
-    private function copyDistFiles()
+    private function copyDistFiles(): void
     {
         foreach (self::DIST_FILES as $file => $distFile) {
             if (!file_exists($this->app_path . '/' . $file)) {
@@ -43,6 +45,9 @@ final class Load
         }
     }
 
+    /**
+     * @throws Exception
+     */
     private function makeSymlink(): void
     {
         makeSymlink($this->app_path . '/js', $_ENV['ELFINDER_VENDOR_DIR'] . '/js');
@@ -52,43 +57,41 @@ final class Load
 
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function checkEnvironment(): void
     {
         if (!isset($_ENV['ELFINDER_VENDOR_DIR'])) {
-            throw new \Exception('Please set to .env ELFINDER_VENDOR_DIR');
+            throw new Exception('Please set to .env ELFINDER_VENDOR_DIR');
         }
         if (!isset($_ENV['ELFINDER_FILES_DIR'])) {
-            throw new \Exception('Please set to .env ELFINDER_FILES_DIR');
+            throw new Exception('Please set to .env ELFINDER_FILES_DIR');
         }
         if (!isset($_ENV['ELFINDER_FILES_URL'])) {
-            throw new \Exception('Please set to .env ELFINDER_FILES_URL');
+            throw new Exception('Please set to .env ELFINDER_FILES_URL');
         }
         if (!isset($_ENV['ELFINDER_TRASH_DIR'])) {
-            throw new \Exception('Please set to .env ELFINDER_TRASH_DIR');
+            throw new Exception('Please set to .env ELFINDER_TRASH_DIR');
         }
         if (!isset($_ENV['ELFINDER_TRASH_URL'])) {
-            throw new \Exception('Please set to .env ELFINDER_TRASH_URL');
+            throw new Exception('Please set to .env ELFINDER_TRASH_URL');
         }
     }
 
-    private function fetchAppPath(Container $container)
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    private function fetchAppPath(Container $container): void
     {
         $this->app_path = $_ENV['PUBLIC_DIR'] . pathinfo(
                 (string)$container->get(RouteCollection::class)->get('elfinder')?->getPath(),
                 PATHINFO_DIRNAME
             );
-
-        if (!is_string($this->app_path)) {
-            throw new \InvalidArgumentException(
-                sprintf('$app_path must be string %s given', get_debug_type($this->app_path))
-            );
-        }
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function createDirectories(): void
     {
