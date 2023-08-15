@@ -6,7 +6,7 @@ namespace EnjoysCMS\Module\ElFinder;
 
 use DI\Container;
 use EnjoysCMS\Core\Routing\Annotation\Route;
-use EnjoysCMS\Module\Admin\AdminBaseController;
+use EnjoysCMS\Module\Admin\AdminController;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Twig\Error\LoaderError;
@@ -14,7 +14,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 #[Route(self::ELFINDER_PUBLIC_DIR, '@elfinder')]
-final class Controller extends AdminBaseController
+final class Controller extends AdminController
 {
 
     public const ELFINDER_PUBLIC_DIR = 'elfinder';
