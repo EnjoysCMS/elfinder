@@ -1,4 +1,4 @@
-**Supported only php 8.0 or higher**
+**Supported only php 8.1 or higher**
 
 Add to .ENV
 ```
